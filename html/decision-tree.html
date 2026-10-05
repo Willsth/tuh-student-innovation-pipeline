@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Where Do I Start</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  @page { size: 297mm 420mm; margin: 0; }
+  body { width: 297mm; height: 420mm; overflow: hidden; }
+  .page { position: relative; width: 100%; height: 100%; padding: 46px 56px 30px; display: flex; flex-direction: column; }
+
+  header h1 { font-family: var(--serif); font-size: 50px; font-weight: 700; letter-spacing: -.015em; line-height: 1; margin-top: 10px; }
+  header .lede { font-family: var(--serif); font-size: 15px; color: var(--ink-2); margin-top: 12px; line-height: 1.5; max-width: 700px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 26px; font-size: 15px; font-weight: 500; color: var(--ink); margin-top: 18px; align-items: center; }
+  .legend .swatch { width: 13px; height: 13px; margin-right: 8px; vertical-align: -1px; }
+  .legend .hollow { display: inline-block; width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--ink-3); margin-right: 8px; vertical-align: -1px; }
+
+  .ladder { position: relative; margin-top: 30px; }
+  .step { display: grid; grid-template-columns: 90px 296px 74px 1fr; align-items: start; padding-bottom: 32px; }
+  .step:last-child { padding-bottom: 0; }
+
+  .rail { align-self: stretch; border-left: 2px solid var(--c); margin-right: 14px; padding: 2px 0 0 10px; }
+  .rail.cont { padding-top: 0; }
+  .rail b { display: block; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 13px; color: var(--c); line-height: 1.2; }
+
+  .start { grid-column: 2; background: var(--ink); color: #fff; border-radius: 999px; padding: 11px 20px; font-family: var(--serif); font-size: 14px; text-align: center; }
+
+  .q { grid-column: 2; display: flex; gap: 12px; align-items: flex-start; background: #fff; border: 1.5px solid var(--ink); border-radius: 14px; padding: 13px 16px 14px 13px; }
+  .q .n { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--ink); font-family: var(--serif); font-size: 13px; font-weight: 700; display: grid; place-items: center; margin-top: 1px; }
+  .q h3 { font-family: var(--serif); font-size: 16.5px; font-weight: 700; line-height: 1.3; }
+
+  .out { grid-column: 4; padding-top: 4px; }
+  .out h4 { font-family: var(--serif); font-size: 16px; font-weight: 700; margin-bottom: 7px; }
+  .out ul { list-style: none; columns: 2; column-gap: 18px; }
+  .out ul.one { columns: 1; }
+  .out li { break-inside: avoid; white-space: nowrap; font-size: 12px; line-height: 1.35; color: var(--ink); padding: 2px 0 4px 15px; position: relative; font-weight: 600; }
+  .out li::before { content: ""; position: absolute; left: 1px; top: 6px; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+  .out li.soft::before { background: none; border: 1.5px solid var(--c); width: 5px; height: 5px; }
+  .out li span { font-weight: 400; color: var(--ink-2); }
+  .out li .chip { font-size: 9px; padding: 2px 6px; margin-left: 4px; vertical-align: 1px; }
+  .note { font-family: var(--serif); font-style: italic; font-size: 12.5px; color: var(--ink-2); margin-top: 6px; line-height: 1.4; }
+  .note.warn { color: #8E2A22; }
+
+  .end { grid-column: 2 / 5; background: #EFEBF6; border: 1.5px solid var(--eco); border-radius: 14px; padding: 16px 20px; display: flex; gap: 30px; align-items: center; }
+  .end h3 { font-family: var(--serif); font-size: 22px; font-weight: 700; color: #3F3466; white-space: nowrap; }
+  .end h3 span { display: block; font-size: 12.5px; font-weight: 400; font-style: italic; color: #6A5A92; }
+  .end ul { list-style: none; columns: 3; column-gap: 22px; flex: 1; }
+  .end li { font-size: 12px; font-weight: 600; padding: 2px 0 4px 15px; position: relative; color: #2E2650; }
+  .end li::before { content: ""; position: absolute; left: 1px; top: 6px; width: 7px; height: 7px; border-radius: 50%; background: var(--eco); }
+  .end li span { font-weight: 400; color: #5D5480; }
+
+  svg.arrows { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+  svg.arrows text { font-family: var(--serif); font-style: italic; font-size: 13px; }
+
+  footer { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--rule); display: flex; gap: 36px; font-size: 11px; color: var(--ink-2); line-height: 1.45; }
+  footer b { color: var(--ink); }
+  footer .src { margin-left: auto; text-align: right; color: var(--ink-3); max-width: 330px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div class="kicker">DTU Skylab × TUH Skylab at Rigshospitalet · October 2026</div>
+  <h1>Where do I start?</h1>
+  <p class="lede">Start at the top and answer each question. A yes takes you down to the next one. Your first no is where you begin: do what it says on the right, then come back and keep going.</p>
+  <div class="legend">
+    <span class="p-dtu"><span class="swatch"></span>DTU course</span>
+    <span class="p-clinic"><span class="swatch"></span>Hospital</span>
+    <span class="p-tuh"><span class="swatch"></span>TUH Skylab</span>
+    <span class="p-skylab"><span class="swatch"></span>DTU Skylab</span>
+    <span class="p-fund"><span class="swatch"></span>Funding</span>
+    <span class="p-eco"><span class="swatch"></span>Scale-up</span>
+    <span class="p-ext"><span class="swatch"></span>Beyond DTU</span>
+    <span style="color:var(--ink-2)"><span class="hollow"></span>planned, not public yet</span>
+  </div>
+</header>
+
+<div class="ladder" id="ladder">
+
+  <div class="step"><div></div><div class="start" id="start">I have a health-tech idea, a clinical problem, or just curiosity</div></div>
+
+  <div class="step">
+    <div class="rail" style="--c: var(--ink-3);"><b>The team</b></div>
+    <div class="q" id="q1"><div class="n">1</div><h3>Is there a DTU student or employee on the team?</h3></div>
+    <div></div>
+    <div class="out" id="o1">
+      <h4>Find a DTU teammate first</h4>
+      <ul>
+        <li class="p-tuh soft">Minisprint with Clinicians</li>
+        <li class="p-tuh soft">Healthtech Hackathon</li>
+        <li class="p-tuh">TUH Skylab <span>for clinicians</span></li>
+        <li class="p-skylab">EXPLORE, OpenInnovation <span>any uni</span></li>
+        <li class="p-ext">Health Innovators <span>any institution</span></li>
+        <li class="p-ext">BETA.HEALTH <span>hospital-led</span></li>
+      </ul>
+      <div class="note">Clinicians: tell Region H Tech Trans about the invention before founding anything.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="rail p-dtu" style="--c: var(--dtu);"><b>Need &amp;<br>explore</b></div>
+    <div class="q" id="q2"><div class="n">2</div><h3>Do you have a clinical problem that the people who face it have confirmed?</h3></div>
+    <div></div>
+    <div class="out" id="o2">
+      <h4>Find the need</h4>
+      <ul class="one">
+        <li class="p-dtu">Needfinding at the Hospital <span>5 ECTS, autumn</span></li>
+        <li class="p-tuh soft">Minisprint with Clinicians <span>one day on a real case</span></li>
+        <li class="p-skylab">Info Session at Skylab <span>open to all</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="rail cont" style="--c: var(--dtu);"></div>
+    <div class="q" id="q3"><div class="n">3</div><h3>Is a clinician working with you on it?</h3></div>
+    <div></div>
+    <div class="out" id="o3">
+      <h4>Get a clinician on board</h4>
+      <ul class="one">
+        <li class="p-tuh">TUH Skylab makerspace <span>at Rigshospitalet</span></li>
+        <li class="p-clinic">Rapid Prototyping in the Clinic <span>5 or 10 ECTS</span></li>
+        <li class="p-tuh soft">Healthtech Hackathon</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="rail" style="--c: var(--tuh);"><b>Build</b></div>
+    <div class="q" id="q4"><div class="n">4</div><h3>Do you have a prototype that users have tried?</h3></div>
+    <div></div>
+    <div class="out" id="o4">
+      <h4>Build it and test it</h4>
+      <ul>
+        <li class="p-clinic">Rapid Prototyping in the Clinic <span>spring</span></li>
+        <li class="p-dtu">X-Tech <span>spring</span></li>
+        <li class="p-tuh">TUH Skylab makerspace</li>
+        <li class="p-skylab">Skylab workshops</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="rail cont" style="--c: var(--tuh);"></div>
+    <div class="q" id="q5"><div class="n">5</div><h3>Do you want to build a company around it?</h3></div>
+    <div></div>
+    <div class="out" id="o5">
+      <h4>Keep it as a project</h4>
+      <ul class="one">
+        <li class="p-dtu">MSc thesis or a special course</li>
+        <li class="p-skylab">Innovation Partner <span>licensing, for researchers</span></li>
+        <li class="p-skylab">Wall of Opportunity <span>find someone to take it on</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="rail cont" style="--c: var(--tuh);"></div>
+    <div class="q" id="q6"><div class="n">6</div><h3>Are you in the Skylab Startup Programme?</h3></div>
+    <div></div>
+    <div class="out" id="o6">
+      <h4>Come in through the Open Door</h4>
+      <ul class="one">
+        <li class="p-skylab soft">Pre-incubation <span>January and June</span></li>
+        <li class="p-skylab">Open-Door Coaching <span>no application form, just pitch</span></li>
+        <li class="p-skylab">Stage 1, Discover <span>up to 6 months</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="rail" style="--c: var(--skylab);"><b>Incubate</b></div>
+    <div class="q" id="q7"><div class="n">7</div><h3>Have you registered a company (CVR)?</h3></div>
+    <div></div>
+    <div class="out" id="o7">
+      <h4>Fund it, and choose when to register</h4>
+      <ul>
+        <li class="p-fund">Skylab Funding <span>DKK 15–150k</span><span class="chip cvr">CVR in 3 months</span></li>
+        <li class="p-fund">Discovery, PoC <span>researchers</span><span class="chip staff">DTU staff</span></li>
+        <li class="p-fund">InnoExplorer <span>DKK 0.5–1.5M</span><span class="chip nocvr">before CVR</span></li>
+        <li class="p-ext">NNF Pioneer Innovator <span>≤ 1.2M</span><span class="chip nocvr">before CVR</span></li>
+      </ul>
+      <div class="note warn">Don't register too early. Once a CVR exists, InnoExplorer is off the table and Innofounder's 3-year clock starts.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="rail cont" style="--c: var(--skylab);"></div>
+    <div class="q" id="q8"><div class="n">8</div><h3>Is the MVP tested, and are you ready to raise money or grow?</h3></div>
+    <div></div>
+    <div class="out" id="o8">
+      <h4>Keep incubating</h4>
+      <ul>
+        <li class="p-skylab">Stage 2, Validate <span>6–12 months</span></li>
+        <li class="p-skylab">Developer Hall</li>
+        <li class="p-skylab">Advisory Days <span>legal, IP</span></li>
+        <li class="p-skylab">Life Science Academy<span class="chip cvr">needs CVR</span></li>
+        <li class="p-ext">Innofounder <span>full-time</span><span class="chip cvr">needs CVR</span></li>
+        <li class="p-ext">BII Venture Lab <span>4.2M loan</span><span class="chip cvr">needs CVR</span></li>
+        <li class="p-eco">MedTech Growth <span>Science Park</span><span class="chip cvr">needs CVR</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="rail" style="--c: var(--eco);"><b>Scale</b></div>
+    <div class="end" id="end">
+      <h3>You're ready to scale<span>with a company and a tested product</span></h3>
+      <ul>
+        <li>DTU SkyFactory <span>by selection</span></li>
+        <li>Stage 3, Launch Pad <span>coming</span></li>
+        <li>DTU Science Park</li>
+        <li>BII Venture House</li>
+        <li>InnoBooster</li>
+        <li>Pre-seed investors</li>
+      </ul>
+    </div>
+  </div>
+
+  <svg class="arrows" id="arrows"></svg>
+</div>
+
+<footer>
+  <div><b>Skip ahead.</b> A finished course or thesis often answers questions 2–4 already.</div>
+  <div><b>Courses and Skylab run side by side.</b> Many teams do both.</div>
+  <div class="src">Requirements and sources: <i>01 Internal Overview</i>.</div>
+</footer>
+</div>
+
+<script>
+(function () {
+  const L = document.getElementById('ladder'), svg = document.getElementById('arrows');
+  const B = L.getBoundingClientRect(), NS = 'http://www.w3.org/2000/svg';
+  const box = id => { const r = document.getElementById(id).getBoundingClientRect(); return { l: r.left - B.left, r: r.right - B.left, t: r.top - B.top, b: r.bottom - B.top, cx: (r.left + r.right) / 2 - B.left, cy: (r.top + r.bottom) / 2 - B.top }; };
+  const add = (tag, a, txt) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); if (txt) e.textContent = txt; svg.appendChild(e); return e; };
+  const GREEN = '#2D7A57', RED = '#B3261E';
+  // open, hand-drawn style arrowhead at (x, y) pointing along angle a
+  const head = (x, y, a, c) => {
+    const s = 7, p = (d) => [x - s * Math.cos(a - d), y - s * Math.sin(a - d)];
+    const [x1, y1] = p(0.5), [x2, y2] = p(-0.5);
+    add('path', { d: `M${x1},${y1} L${x},${y} L${x2},${y2}`, fill: 'none', stroke: c, 'stroke-width': 1.8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+  };
+  const yes = (from, to, label) => {
+    const a = box(from), b = box(to), x = a.cx, y1 = a.b + 4, y2 = b.t - 5;
+    add('path', { d: `M${x},${y1} L${x},${y2}`, fill: 'none', stroke: GREEN, 'stroke-width': 1.8, 'stroke-linecap': 'round' });
+    head(x, y2, Math.PI / 2, GREEN);
+    if (label) add('text', { x: x + 9, y: (y1 + y2) / 2 + 4, fill: GREEN }, 'yes');
+  };
+  const no = (from, to) => {
+    const a = box(from), o = document.getElementById(to).querySelector('h4').getBoundingClientRect();
+    const y = Math.max(a.t + 14, Math.min(a.b - 14, (o.top + o.bottom) / 2 - B.top));
+    const x1 = a.r + 5, x2 = o.left - B.left - 10, mx = (x1 + x2) / 2;
+    add('path', { d: `M${x1},${y} L${x2},${y}`, fill: 'none', stroke: RED, 'stroke-width': 1.8, 'stroke-linecap': 'round' });
+    head(x2, y, 0, RED);
+    add('text', { x: mx, y: y - 7, fill: RED, 'text-anchor': 'middle' }, 'no');
+  };
+  yes('start', 'q1', false);
+  const qs = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8'];
+  qs.forEach((q, i) => { no(q, 'o' + (i + 1)); yes(q, qs[i + 1] || 'end', true); });
+})();
+</script>
+</body>
+</html>

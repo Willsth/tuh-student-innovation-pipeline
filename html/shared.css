@@ -1,0 +1,66 @@
+/* Shared tokens for the TUH Skylab pipeline visuals (print-first). */
+:root {
+  --paper: #F8F5EF;
+  --card: #FFFFFF;
+  --ink: #1F2328;
+  --ink-2: #4E555D;
+  --ink-3: #848A90;
+  --rule: #DDD7CC;
+  --rule-2: #ECE7DE;
+
+  /* Providers, matching the colours in the TUH programme plan */
+  --dtu: #2F5F8F;      /* DTU courses */
+  --skylab: #9C4716;   /* DTU Skylab */
+  --tuh: #E0711C;      /* TUH Skylab @ Rigshospitalet */
+  --clinic: #1E3253;   /* Hospital departments */
+  --fund: #2D7A57;     /* Funding */
+  --eco: #6A5A92;      /* Scale-up and ecosystem */
+  --ext: #8A8178;      /* Beyond DTU */
+
+  --warn: #B3261E;
+
+  --serif: Charter, "Iowan Old Style", Georgia, serif;
+  --sans: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.kicker { font-size: 11px; color: var(--ink-3); letter-spacing: .01em; }
+
+/* Provider colour hooks */
+.p-dtu    { --c: var(--dtu); }
+.p-skylab { --c: var(--skylab); }
+.p-tuh    { --c: var(--tuh); }
+.p-clinic { --c: var(--clinic); }
+.p-fund   { --c: var(--fund); }
+.p-eco    { --c: var(--eco); }
+.p-ext    { --c: var(--ext); }
+
+.swatch { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--c); vertical-align: 0; margin-right: 6px; }
+
+/* Requirement tags: plain words, quiet */
+.chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.chip {
+  font-family: var(--sans);
+  font-size: 9.5px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 3px 7px 3px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  color: var(--ink-2);
+  background: #fff;
+  white-space: nowrap;
+}
+.chip.open  { border-color: #B9D9C7; color: #23704B; background: #F0F7F2; }
+.chip.req   { border-color: #BCCADA; color: #2B5078; background: #F2F6FA; }
+.chip.staff { border-color: #CBBFE0; color: #54448A; background: #F6F3FB; }
+.chip.cvr   { border-color: #1F2328; color: #1F2328; background: #fff; }
+.chip.nocvr { border-color: #E2B1AC; color: var(--warn); background: #FCF1EF; }

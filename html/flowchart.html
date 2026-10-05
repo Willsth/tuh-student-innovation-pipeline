@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TUH Skylab Pipeline Flowchart</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  @page { size: 420mm 297mm; margin: 0; }
+  :root { --ext: #7A8088; }
+  .p-ext { --c: var(--ext); }
+  body { width: 420mm; height: 297mm; overflow: hidden; background: #FBFAF7; }
+  .page { position: relative; width: 100%; height: 100%; padding: 28px 52px 20px; display: flex; flex-direction: column; }
+
+  header { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; }
+  header h1 { font-family: var(--serif); font-size: 36px; font-weight: 700; letter-spacing: -.015em; line-height: 1; margin-top: 8px; }
+  header .lede { font-family: var(--serif); font-size: 14.5px; color: var(--ink-2); margin-top: 10px; }
+  .key { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; font-size: 14.5px; font-weight: 500; color: var(--ink); white-space: nowrap; flex: none; }
+  .key .swatch { width: 12px; height: 12px; margin-right: 7px; vertical-align: -1px; }
+  .key .chip { font-size: 12px; padding: 4px 9px; margin-right: 5px; }
+  .key .row { display: flex; gap: 22px; align-items: center; }
+  .key .dash { display: inline-block; width: 26px; height: 15px; border: 1.2px dashed var(--ink-3); border-radius: 4px; vertical-align: -2px; margin-right: 6px; }
+
+  .board { position: relative; margin-top: 24px; display: grid;
+    grid-template-columns: 118px repeat(5, 1fr);
+    column-gap: 26px; row-gap: 0; align-content: start; }
+
+  .phase { padding-bottom: 9px; border-bottom: 1.5px solid var(--ink); }
+  .phase .num { font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--ink-3); }
+  .phase b { display: block; font-family: var(--serif); font-size: 21px; font-weight: 700; margin-top: 0; }
+  .phase span { font-size: 11px; color: var(--ink-2); }
+
+  .lane { padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  .lane b { display: flex; align-items: center; gap: 7px; font-family: var(--serif); font-size: 14.5px; font-weight: 700; }
+  .lane b::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c); flex: none; }
+  .lane small { display: block; font-family: var(--serif); font-style: italic; font-size: 11px; color: var(--ink-3); margin-top: 3px; line-height: 1.35; padding-left: 16px; }
+  .lane.tall { grid-row: span 2; }
+
+  .cell { padding: 11px 0; border-bottom: 1px solid var(--rule); display: flex; flex-direction: column; gap: 7px; }
+  .cell.top { padding-bottom: 6px; border-bottom: 0; }
+  .cell.span2 { grid-column: span 2; }
+
+  .card { background: #fff; border: 1px solid #E4DED3; border-radius: 10px; padding: 7px 11px 8px; position: relative; }
+  .card h4::before, .card.list .li h4::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--c); margin-right: 7px; vertical-align: 1px; }
+  .card h4 { font-size: 12px; font-weight: 600; line-height: 1.3; }
+  .card .m { font-size: 10px; color: var(--ink-2); margin-top: 2px; line-height: 1.35; padding-left: 14px; }
+  .card .chips { margin-top: 4px; padding-left: 14px; }
+  .card.soft { border-style: dashed; border-color: #C4BCAE; background: transparent; }
+  .card.hi { border-color: var(--c); border-width: 1.5px; }
+  .card.list { padding: 0; }
+  .card.list .li { padding: 7px 11px 8px; }
+  .card.list .li + .li { border-top: 1px solid #EEEBE4; }
+  .none { font-family: var(--serif); font-size: 12px; color: var(--ink-3); font-style: italic; padding: 6px 0; line-height: 1.4; }
+
+  /* Startup Programme spine */
+  .chev { position: relative; z-index: 1; background: var(--skylab); color: #fff; padding: 9px 14px 10px 26px; margin-right: -38px;
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%, 12px 50%); }
+  .chev.first { background: #F1DFD2; color: var(--skylab); clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%); padding-left: 14px; }
+  .chev.last { margin-right: 0; background: #BE8865; }
+  .chev small { display: block; font-family: var(--serif); font-style: italic; font-size: 11px; opacity: .85; }
+  .chev b { display: block; font-family: var(--serif); font-size: 15.5px; font-weight: 700; margin-top: 0; }
+  .chev span { display: block; font-size: 10.5px; opacity: .92; margin-top: 2px; }
+
+  .support { display: flex; gap: 18px; align-items: center; padding: 12px 0 0; font-size: 11px; color: var(--ink-2); }
+  .support b { color: var(--ink); }
+  .support .lbl { width: 118px; margin-right: 8px; flex: none; font-family: var(--serif); font-weight: 700; color: var(--ink); font-size: 14px; }
+  .support .sep { color: var(--rule); }
+
+  footer { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--rule); display: flex; gap: 40px; font-size: 11px; color: var(--ink-2); line-height: 1.45; }
+  footer b { color: var(--ink); }
+  footer .src { margin-left: auto; text-align: right; color: var(--ink-3); font-size: 10px; max-width: 380px; }
+
+  svg.overlay { position: absolute; inset: 0; pointer-events: none; overflow: visible; z-index: 2; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div>
+    <div class="kicker">DTU Skylab × TUH Skylab at Rigshospitalet · October 2026</div>
+    <h1>The TUH Skylab Innovation Pipeline</h1>
+    <p class="lede">Everything needs a DTU person on the team unless it says <span class="chip open">open to all</span>.</p>
+  </div>
+  <div class="key">
+    <div class="row">
+      <span class="p-dtu"><span class="swatch"></span>DTU course</span>
+      <span class="p-clinic"><span class="swatch"></span>Hospital</span>
+      <span class="p-tuh"><span class="swatch"></span>TUH Skylab</span>
+      <span class="p-skylab"><span class="swatch"></span>DTU Skylab</span>
+      <span class="p-fund"><span class="swatch"></span>Funding</span>
+      <span class="p-eco"><span class="swatch"></span>Scale-up</span>
+      <span class="p-ext"><span class="swatch"></span>Beyond DTU</span>
+    </div>
+    <div class="row">
+      <span><span class="chip staff">DTU staff</span> employees only</span>
+      <span><span class="chip cvr">needs CVR</span> company exists</span>
+      <span><span class="chip nocvr">before CVR</span> no company yet</span>
+      <span><span class="dash"></span>planned or to confirm</span>
+    </div>
+  </div>
+</header>
+
+<div class="board" id="board">
+  <div></div>
+  <div class="phase" id="ph1"><div class="num">01</div><b>Need</b><span>Find a real clinical problem</span></div>
+  <div class="phase" id="ph2"><div class="num">02</div><b>Explore</b><span>Ideate and form a team</span></div>
+  <div class="phase" id="ph3"><div class="num">03</div><b>Build</b><span>Prototype and test with users</span></div>
+  <div class="phase" id="ph4"><div class="num">04</div><b>Incubate</b><span>MVP, business model, company</span></div>
+  <div class="phase" id="ph5"><div class="num">05</div><b>Scale</b><span>Company in the market</span></div>
+
+  <!-- Courses -->
+  <div class="lane p-dtu"><b>Courses</b><small>For ECTS</small></div>
+  <div class="cell">
+    <div class="card p-dtu"><h4>Needfinding at the Hospital</h4><div class="m">5 ECTS · autumn</div></div>
+  </div>
+  <div class="cell">
+    <div class="card p-dtu soft"><h4>Innovation in Engineering</h4><div class="m">42500 · 5 ECTS · January · fit to confirm, projects often predefined</div></div>
+  </div>
+  <div class="cell">
+    <div class="card p-clinic list hi"><div class="li"><h4>Rapid Prototyping & Co-creation in the Clinic</h4><div class="m">At Rigshospitalet · 5/10 ECTS · spring</div></div><div class="li"><h4>X-Tech Entrepreneurship</h4><div class="m">eHealth & LifeScience tracks · spring</div></div></div>
+  </div>
+  <div class="cell">
+    <div class="card p-dtu"><h4>X-Tech+ · Feasibility Study · Due Diligence</h4><div class="m">Follow-on courses, ~6–12 places each</div></div>
+  </div>
+  <div class="cell"><div class="none">An MSc thesis can carry a project through any phase</div></div>
+
+  <!-- Clinic -->
+  <div class="lane p-tuh"><b>Clinic</b><small>TUH Skylab and wards</small></div>
+  <div class="cell">
+    <div class="card p-tuh soft"><h4>Minisprint with Clinicians</h4><div class="m">1 day on a real case · autumn</div></div>
+  </div>
+  <div class="cell">
+    <div class="card p-tuh soft"><h4>Healthtech Hackathon</h4><div class="m">~40 places · spring & autumn</div></div>
+  </div>
+  <div class="cell span2">
+    <div class="card p-tuh hi"><h4>TUH Skylab makerspace at Rigshospitalet</h4><div class="m">Prototype next to the clinic: 3D printing, laser cutting, fly-in desks, tech & business guidance, feedback from clinicians and patients</div></div>
+  </div>
+  <div class="cell">
+    <div class="card p-clinic soft"><h4>Clinical pilot & adoption</h4><div class="m">A department trials the product (proposed)</div></div>
+  </div>
+
+  <!-- DTU Skylab: spine row + offers row -->
+  <div class="lane p-skylab tall"><b>DTU Skylab</b><small>Events and the Startup Programme</small></div>
+  <div class="cell top"></div>
+  <div class="cell top"><div class="chev first" id="od"><small>The way in, no application</small><b>Open-Door Coaching</b><span>Pitch to a coach</span></div></div>
+  <div class="cell top"><div class="chev"><small>Stage 1, up to 6 months</small><b>Discover</b><span>Validate the idea, form the team</span></div></div>
+  <div class="cell top"><div class="chev"><small>Stage 2, 6–12 months</small><b>Validate</b><span>MVP, plan, register CVR</span></div></div>
+  <div class="cell top"><div class="chev last"><small>Stage 3, coming</small><b>Launch Pad</b><span>Growth-stage support</span></div></div>
+  <div class="cell">
+    <div class="card p-skylab"><h4>Info / In-Flight Session</h4><div class="m">What Skylab offers, ideation crash course</div><div class="chips"><span class="chip open">open to all</span></div></div>
+  </div>
+  <div class="cell">
+    <div class="card p-skylab list"><div class="li"><h4>EXPLORE · OpenInnovation</h4><div class="m">Cross-university programmes</div><div class="chips"><span class="chip open">any Danish university</span></div></div><div class="li"><h4>Pre-incubation</h4><div class="m">Healthtech Idea to Start-up · Jan & June</div></div></div>
+  </div>
+  <div class="cell"><div class="none">Healthtech track runs inside Stages 1–3</div></div>
+  <div class="cell">
+    <div class="card p-skylab"><h4>Developer Hall · Prototype2Market</h4><div class="m">Hardware space, 3-month terms</div></div>
+    <div class="card p-eco"><h4>MedTech Growth</h4><div class="m">DTU Science Park · MDR/IVDR devices · 10–12 months</div><div class="chips"><span class="chip cvr">needs CVR</span></div></div>
+  </div>
+  <div class="cell">
+    <div class="card p-eco list"><div class="li"><h4>DTU SkyFactory</h4><div class="m">Investors and advisors, by selection</div></div><div class="li"><h4>Life Science Academy</h4><div class="m">Free DK/SE/NO startup programme</div><div class="chips"><span class="chip cvr">needs CVR</span></div></div></div>
+  </div>
+
+  <!-- Funding -->
+  <div class="lane p-fund"><b>Funding</b><small>Depends on who applies</small></div>
+  <div class="cell span2"><div class="none">No grants yet. Course budgets (X-Tech: DKK 5,000) cover small costs</div></div>
+  <div class="cell">
+    <div class="card p-fund hi"><h4>Skylab Funding</h4><div class="m">DKK 15–150k · spring & autumn</div><div class="chips"><span class="chip cvr">CVR within 3 months of award</span></div></div>
+    <div class="card p-fund"><h4>Discovery Grant</h4><div class="m">≤ DKK 100k · Stage 1</div><div class="chips"><span class="chip staff">DTU staff</span></div></div>
+  </div>
+  <div class="cell">
+    <div class="card p-fund list"><div class="li"><h4>Proof of Concept</h4><div class="m">≤ DKK 500k · Stage 2</div><div class="chips"><span class="chip staff">DTU staff</span></div></div><div class="li"><h4>InnoExplorer</h4><div class="m">DKK 0.5–1.5M · Stage 2</div><div class="chips"><span class="chip nocvr">before CVR</span></div></div></div>
+  </div>
+  <div class="cell"><div class="none">Investors through SkyFactory and the programmes below</div></div>
+
+  <!-- Beyond DTU -->
+  <div class="lane p-ext"><b>Beyond DTU</b><small>Their own rules</small></div>
+  <div class="cell">
+    <div class="card p-ext list"><div class="li"><h4>CPH MedTech</h4><div class="m">Student-run summits & hackathons</div><div class="chips"><span class="chip open">open to all</span></div></div></div>
+  </div>
+  <div class="cell">
+    <div class="card p-ext list"><div class="li"><h4>Health Innovators</h4><div class="m">3 months · CHI, KU, DTU, CBS · Feb</div><div class="chips"><span class="chip open">any Danish institution</span></div></div><div class="li"><h4>KU Lighthouse Launch</h4><div class="m">~DKK 30k, 7 weeks · KU students</div></div></div>
+  </div>
+  <div class="cell">
+    <div class="card p-ext list hi"><div class="li"><h4>BETA.HEALTH</h4><div class="m">DKK 0.5–1M + accelerator</div><div class="chips"><span class="chip req">hospital-employed lead</span></div></div><div class="li"><h4>NNF Pioneer Innovator</h4><div class="m">≤ DKK 1.2M · held by the institution</div><div class="chips"><span class="chip nocvr">before CVR</span></div></div></div>
+  </div>
+  <div class="cell">
+    <div class="card p-ext list"><div class="li"><h4>Innofounder</h4><div class="m">DKK 27.5k/founder/month · full-time</div><div class="chips"><span class="chip cvr">CVR under 3 years</span></div></div><div class="li"><h4>BII Venture Lab</h4><div class="m">DKK 4.2M convertible loan</div><div class="chips"><span class="chip cvr">needs CVR</span></div></div></div>
+  </div>
+  <div class="cell">
+    <div class="card p-ext list"><div class="li"><h4>BII Venture House · InnoBooster</h4><div class="m">Follow-on loans and grants</div></div><div class="li"><h4>Pre-seed investors</h4><div class="m">PreSeed Ventures, Accelerace</div><div class="chips"><span class="chip cvr">needs CVR</span></div></div></div>
+  </div>
+
+  <svg class="overlay" id="overlay"></svg>
+</div>
+
+<div class="support">
+  <div class="lbl">Any time</div>
+  <span><b>Advisory Days</b> free legal, accounting & IP advice</span><span class="sep">|</span>
+  <span><b>Workshops & Tech Support</b> register first, DTU card</span><span class="sep">|</span>
+  <span><b>Pre-startup Mentoring</b></span><span class="sep">|</span>
+  <span><b>Wall of Opportunity</b> find co-founders</span>
+</div>
+
+<footer>
+  <div><b>Time the CVR.</b> InnoExplorer is lost once a company exists. Skylab Funding needs one within 3 months of the award.</div>
+  <div><b>Clinicians</b> need a DTU co-founder for Skylab, or can lead through BETA.HEALTH.</div>
+  <div class="src">Details, requirements and sources: <i>01 Internal Overview</i>. Dashed boxes are planned or proposed.</div>
+</footer>
+</div>
+
+<script>
+(function () {
+  const board = document.getElementById('board'), svg = document.getElementById('overlay');
+  const B = board.getBoundingClientRect(), NS = 'http://www.w3.org/2000/svg';
+  const L = document.getElementById('ph4').getBoundingClientRect(), R = document.getElementById('ph5').getBoundingClientRect();
+  const x = (L.right + R.left) / 2 - B.left, y1 = L.bottom - B.top + 4, y2 = B.height - 4;
+  const set = (e, a) => { for (const k in a) e.setAttribute(k, a[k]); svg.appendChild(e); return e; };
+  set(document.createElementNS(NS, 'line'), { x1: x, x2: x, y1, y2, stroke: '#1F2328', 'stroke-width': 1.2, 'stroke-dasharray': '2 5', 'stroke-linecap': 'round' });
+  const t = set(document.createElementNS(NS, 'text'), { x: x, y: y2 + 16, 'text-anchor': 'middle', 'font-family': 'Charter, Georgia, serif', 'font-style': 'italic', 'font-size': 13, fill: '#1F2328' });
+  t.textContent = 'company registered';
+})();
+</script>
+</body>
+</html>
